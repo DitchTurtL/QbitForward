@@ -1,0 +1,90 @@
+﻿<Window x:Class="QbitForward.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QbitForward.Views"
+        xmlns:viewModels="clr-namespace:QbitForward.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}"
+        Title="QBitForward" Height="450" Width="350">
+    <Window.Resources>
+        <ControlTemplate x:Key="TargetImage">
+            <Viewbox Stretch="Uniform">
+                <Canvas Height="24" Width="24">
+                    <Path Data="M11.2479 2C6.30929 2.36618 2.36618 6.30929 2 11.2479H4.98056C5.39592 11.2479 5.73264 11.5846 5.73264 12C5.73264 12.4154 5.39592 12.7521 4.98056 12.7521H2C2.36618 17.6907 6.30929 21.6338 11.2479 22V19.0194C11.2479 18.6041 11.5846 18.2674 12 18.2674C12.4154 18.2674 12.7521 18.6041 12.7521 19.0194V22C17.6907 21.6338 21.6338 17.6907 22 12.7521H19.0194C18.6041 12.7521 18.2674 12.4154 18.2674 12C18.2674 11.5846 18.6041 11.2479 19.0194 11.2479H22C21.6338 6.30929 17.6907 2.36618 12.7521 2V4.98056C12.7521 5.39592 12.4154 5.73264 12 5.73264C11.5846 5.73264 11.2479 5.39592 11.2479 4.98056V2ZM9.24236 12C9.24236 11.5846 9.57908 11.2479 9.99444 11.2479H11.2479V9.99444C11.2479 9.57908 11.5846 9.24236 12 9.24236C12.4154 9.24236 12.7521 9.57908 12.7521 9.99444V11.2479H14.0056C14.4209 11.2479 14.7576 11.5846 14.7576 12C14.7576 12.4154 14.4209 12.7521 14.0056 12.7521H12.7521V14.0056C12.7521 14.4209 12.4154 14.7576 12 14.7576C11.5846 14.7576 11.2479 14.4209 11.2479 14.0056V12.7521H9.99444C9.57908 12.7521 9.24236 12.4154 9.24236 12Z" Fill="#1C274C" />
+                </Canvas>
+            </Viewbox>
+        </ControlTemplate>
+        
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="DodgerBlue"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0,3,0,0"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
+
+        <Style TargetType="Image">
+            <Setter Property="Height" Value="325"/>
+            <Setter Property="Width" Value="325"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Hostname -->
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Host"/>
+        <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding HostName, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+
+        <!-- Port -->
+        <TextBlock Grid.Column="3" Grid.Row="0" Text="Port" />
+        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Port, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+
+        <!-- Username -->
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Username"/>
+        <TextBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Username, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+            
+        <!-- Password -->
+        <TextBlock Grid.Column="2" Grid.Row="2" Text="Password"/>
+        <PasswordBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Stretch"/>
+
+        <Image Source="../Images/target.png" 
+               Grid.Row="5" Grid.Column="0" 
+               Grid.ColumnSpan="4"
+               AllowDrop="True"
+               DragEnter="DropTarget_DragEnter"
+               Drop="DropTarget_Drop"/>
+    </Grid>
+    
+</Window>
