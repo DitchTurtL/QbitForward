@@ -2,7 +2,7 @@
 
 namespace QbitForward.Services;
 
-internal interface IQbittorrentService
+public interface IQbittorrentService
 {
-    Task<bool> AddMagnetLink(ClientConfig clientConfig, string magnetLink);
+    Task<bool> AddMagnetLink(ClientConfig clientConfig, string magnetLink, Action<string> showErrors);
 }

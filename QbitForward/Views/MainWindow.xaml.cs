@@ -1,5 +1,7 @@
 ﻿using QbitForward.ViewModels;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace QbitForward.Views;
 
@@ -10,6 +12,7 @@ public partial class MainWindow : Window
 
     public MainWindow(MainWindowViewModel mwvm)
     {
+        mwvm.MainWindow = this;
         DataContext = mwvm;
         InitializeComponent();
     }
@@ -22,14 +25,14 @@ public partial class MainWindow : Window
             e.Effects = DragDropEffects.None;
     }
 
-    private void DropTarget_Drop(object sender, DragEventArgs e)
+    private async void DropTarget_DropAsync(object sender, DragEventArgs e)
     {
         if (e.Data.GetDataPresent(DataFormats.Text))
         {
             var url = e.Data.GetData(DataFormats.Text) as string;
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
-                dataContext.AddUrlAsync(url);
+                await dataContext.AddUrlAsync(url);
             }
             else
             {
@@ -37,5 +40,21 @@ public partial class MainWindow : Window
             }
         }
 
+    }
+
+    private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+    {
+        if (this.DataContext == null)
+            return;
+
+        dataContext.Password = ((PasswordBox)sender).Password;
+        dataContext.UpdateClientConfig();
+    }
+
+    public void ShowMessage()
+    {
+        // Play fade out animation
+        var fadeOut = (Storyboard)this.Resources["FadeOutAnimation"];
+        fadeOut.Begin(MessageGrid);
     }
 }

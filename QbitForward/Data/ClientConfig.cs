@@ -1,6 +1,6 @@
 ﻿namespace QbitForward.Data;
 
-internal class ClientConfig
+public class ClientConfig
 {
     public string? HostName { get; set; }
     public int? Port { get; set; }

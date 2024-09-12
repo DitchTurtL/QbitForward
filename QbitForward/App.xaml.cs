@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using QbitForward.Services;
+using QbitForward.ViewModels;
 using QbitForward.Views;
 using System.Windows;
 
@@ -17,6 +18,7 @@ public partial class App : Application
             {
                 services
                     .AddSingleton<MainWindow>()
+                    .AddSingleton<MainWindowViewModel>()
                     .AddSingleton<IQbittorrentService, QbittorrentService>();
             })
             .Build();

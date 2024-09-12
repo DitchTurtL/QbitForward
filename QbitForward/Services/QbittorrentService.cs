@@ -3,18 +3,18 @@ using System.Net.Http;
 
 namespace QbitForward.Services;
 
-internal class QbittorrentService : IQbittorrentService
+public class QbittorrentService : IQbittorrentService
 {
     private static readonly HttpClient client = new HttpClient();
     private static string sessionCookie = string.Empty;
 
-    public async Task<bool> AddMagnetLink(ClientConfig clientConfig, string magnetLink)
+    public async Task<bool> AddMagnetLink(ClientConfig clientConfig, string magnetLink, Action<string> showErrors)
     {
         // If Username and password are supplied, login
-        var isAuthenticated = (clientConfig.Username == null && clientConfig.Password == null) || await Login(clientConfig);
+        var isAuthenticated = (clientConfig.Username == null && clientConfig.Password == null) || await Login(clientConfig, showErrors);
         if (isAuthenticated)
         {
-            var isAdded = await PostMagnetLink(clientConfig, magnetLink);
+            var isAdded = await PostMagnetLink(clientConfig, magnetLink, showErrors);
             if (!isAdded)
                 return false;
             else
@@ -23,7 +23,7 @@ internal class QbittorrentService : IQbittorrentService
         return false;
     }
 
-    private async Task<bool> Login(ClientConfig clientConfig)
+    private async Task<bool> Login(ClientConfig clientConfig, Action<string> showErrors)
     {
         var loginContent = new FormUrlEncodedContent([
             new KeyValuePair<string, string>("username", clientConfig.Username!),
@@ -46,13 +46,13 @@ internal class QbittorrentService : IQbittorrentService
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message); // Error handling
+            showErrors("Failed to login!");
         }
 
         return false;
     }
 
-    private async Task<bool> PostMagnetLink(ClientConfig clientConfig, string magnetLink)
+    private async Task<bool> PostMagnetLink(ClientConfig clientConfig, string magnetLink, Action<string> showErrors)
     {
         var addContent = new FormUrlEncodedContent([
             new KeyValuePair<string, string>("urls", magnetLink)
@@ -65,7 +65,7 @@ internal class QbittorrentService : IQbittorrentService
         }
         catch (Exception ex)
         {
-           Console.WriteLine(ex.Message); // Error handling
+           showErrors("Failed to add magnet link!");
         }
 
         return false;

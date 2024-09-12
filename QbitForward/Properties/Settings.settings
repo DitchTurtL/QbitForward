@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="HostName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.0.234</Value>
+      <Value Profile="(Default)">localhost</Value>
     </Setting>
     <Setting Name="Port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8444</Value>

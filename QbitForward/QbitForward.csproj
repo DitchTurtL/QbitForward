@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\qbittorrent.ico" />
     <None Remove="Images\target.png" />
   </ItemGroup>
 
@@ -19,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\qbittorrent.ico" />
     <Resource Include="Images\target.png" />
   </ItemGroup>
 

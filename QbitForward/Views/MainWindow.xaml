@@ -7,7 +7,9 @@
         xmlns:viewModels="clr-namespace:QbitForward.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}"
-        Title="QBitForward" Height="450" Width="350">
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Topmost="True"
+        Title="QBitForward" Background="DodgerBlue" Height="475" Width="375"
+        Icon="../Images/qbittorrent.ico">
     <Window.Resources>
         <ControlTemplate x:Key="TargetImage">
             <Viewbox Stretch="Uniform">
@@ -17,10 +19,6 @@
             </Viewbox>
         </ControlTemplate>
         
-        <Style TargetType="Window">
-            <Setter Property="Background" Value="DodgerBlue"/>
-        </Style>
-
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Century Gothic"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -46,6 +44,12 @@
             <Setter Property="Height" Value="325"/>
             <Setter Property="Width" Value="325"/>
         </Style>
+
+        <Storyboard x:Key="FadeOutAnimation">
+            
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" 
+                             BeginTime="0:0:5" Duration="0:0:2" />
+        </Storyboard>
     </Window.Resources>
     
     <Grid Margin="5">
@@ -77,14 +81,21 @@
             
         <!-- Password -->
         <TextBlock Grid.Column="2" Grid.Row="2" Text="Password"/>
-        <PasswordBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Stretch"/>
+        <PasswordBox x:Name="PasswordInput" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" PasswordChanged="PasswordBox_PasswordChanged" HorizontalAlignment="Stretch"/>
 
         <Image Source="../Images/target.png" 
                Grid.Row="5" Grid.Column="0" 
                Grid.ColumnSpan="4"
                AllowDrop="True"
                DragEnter="DropTarget_DragEnter"
-               Drop="DropTarget_Drop"/>
+               Drop="DropTarget_DropAsync"/>
+
+
+        <Grid Name="MessageGrid" Visibility="{Binding MessageVisible}" Grid.Row="4" Grid.ColumnSpan="4" VerticalAlignment="Bottom">
+            <Rectangle Fill="{Binding MessageColor}" Height="35" />
+            <TextBlock Text="{Binding MessageText}" VerticalAlignment="Center" Margin="5"/>
+        </Grid>
     </Grid>
-    
+
+
 </Window>
